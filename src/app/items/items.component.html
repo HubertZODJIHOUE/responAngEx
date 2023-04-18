@@ -1,1 +1,44 @@
 <h1>items works!</h1>
+<button type="button" class="btn btn-primary" *ngIf="istaogle">true</button>
+<button type="button" class="btn btn-secondary" *ngIf="!istaogle">false</button>
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <h2 class="text-center">Produits écologiques</h2>
+      <form (ngSubmit)="onSearch()">
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" placeholder="Rechercher un produit" [(ngModel)]="searchTerm" name="searchTerm">
+          <div class="input-group-append">
+            <button class="btn btn-primary" type="submit">Rechercher</button>
+          </div>
+        </div>
+      </form>
+      <hr>
+      <div *ngIf="products.length > 0">
+        <div class="card-deck">
+          <div class="card" *ngFor="let product of products">
+            <img src="{{product?.image}}" class="card-img-top" alt="{{product?.name}}">
+            <div class="card-body">
+              <h5 class="card-title">{{product?.name}}</h5>
+              <p class="card-text">{{product?.description}}</p>
+            </div>
+            <div class="card-footer">
+              <small class="text-muted">{{product?.price}} €</small>
+              <button class="btn btn-primary float-right" (click)="onAddToCart(product)">Ajouter au panier</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="products.length === 0 && searchPerformed">
+        <p>Aucun produit trouvé pour cette recherche.</p>
+      </div>
+      <div *ngIf="!searchPerformed">
+        <p>Veuillez saisir un terme de recherche ci-dessus.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
